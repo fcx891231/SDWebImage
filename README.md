@@ -8,5 +8,5 @@
     [[SDImageCache sharedImageCache] clearDisk];                   //清除磁盘缓存
     [[SDImageCache sharedImageCache] clearMemory];                 //清除内存缓存
     
-3.如果要使用图片下载缓存请包涵 : #import <UIImageView+WebCache.h>,
-  若果仅仅使用清除缓存请包涵   : #import <SDImageCache.h>.
+3.如果要使用图片下载缓存请包涵 : #import "UIImageView+WebCache.h"
+  若果仅仅使用清除缓存请包涵   : #import "SDImageCache.h"
