@@ -8,5 +8,40 @@
     [[SDImageCache sharedImageCache] clearDisk];                   //清除磁盘缓存
     [[SDImageCache sharedImageCache] clearMemory];                 //清除内存缓存
     
+    /**
+ *  NSFileManager获取文件大小,跟
+ */
+- (void)getSize
+{
+    
+    NSUInteger size = [SDImageCache sharedImageCache].getSize;     // 图片缓存
+    [[SDImageCache sharedImageCache] clearDisk];                   //清除磁盘缓存
+    [[SDImageCache sharedImageCache] clearMemory];                 //清除内存缓存
+    
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    
+    NSString *cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSString *cachePath = [cache stringByAppendingPathComponent:@"default/com.hackemist.SDWebImageCache.default"];
+    NSDirectoryEnumerator *fileEnumerator = [manager enumeratorAtPath:cachePath];
+    
+    
+    NSInteger totlaSize = 0;
+    for (NSString *fileName in fileEnumerator) {
+        NSString *filePath = [cachePath stringByAppendingPathComponent:fileName];
+        
+        NSDictionary *attrs = [manager attributesOfItemAtPath:filePath error:nil];
+        if ([attrs[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+            continue;
+        }
+        totlaSize += [attrs[NSFileSize] integerValue];
+        
+        }
+   
+    FXLog(@"%zd",totlaSize);
+
+}
+    
 3.如果要使用图片下载缓存请包涵 : #import "UIImageView+WebCache.h"
   若果仅仅使用清除缓存请包涵   : #import "SDImageCache.h"
